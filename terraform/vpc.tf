@@ -7,14 +7,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-# TODO: Create public subnets
-# Requirements:
-# - At least 2 subnets in different availability zones
-# - Must have map_public_ip_on_launch = true
-# - Use cidrsubnet() function or define CIDR blocks manually
-
 # resource "aws_subnet" "public" {
-#   # TODO: Implement public subnets
+
 # }
 
-# TODO: Create internet gateway and route table for public subnets
