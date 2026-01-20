@@ -1,0 +1,75 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, feat/*]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # TODO: Add step to set up Docker Buildx
+      # Hint: Use docker/setup-buildx-action@v3
+
+      # TODO: Add step to log in to the container registry
+      # Hint: Use docker/login-action@v3 with:
+      #   registry: ${{ env.REGISTRY }}
+      #   username: ${{ github.actor }}
+      #   password: ${{ secrets.GITHUB_TOKEN }}
+
+      # TODO: Add step to extract metadata (tags, labels) for Docker
+      # Hint: Use docker/metadata-action@v5
+
+      # TODO: Add step to build the Docker image
+      # Hint: Use docker/build-push-action@v5
+      # Remember: Don't push on pull requests, only on main branch
+
+      - name: Build Docker image (local)
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} .
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build image for scanning
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:scan .
+
+      # TODO: Add Grype security scanning
+      # Hint: Use anchore/scan-action@v3
+      # Documentation: https://github.com/anchore/scan-action
+      #
+      # Example structure:
+      # - name: Run Grype vulnerability scanner
+      #   uses: anchore/scan-action@v3
+      #   with:
+      #     image: "..."
+      #     fail-build: true
+      #     severity-cutoff: high
+
+      - name: Placeholder - Security scan
+        run: |
+          echo "TODO: Replace this step with Grype scanning"
+          echo "The scan should fail the build on HIGH or CRITICAL vulnerabilities"
+
+  # TODO: Add a 'tag-release' job that:
+  # - Only runs on main branch
+  # - Creates a semver tag (e.g., v1.0.0)
