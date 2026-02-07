@@ -1,3 +1,4 @@
+
 # EC2 Instances
 # Data source to get latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux" {
@@ -16,6 +17,9 @@ resource "aws_instance" "server" {
   ami      = data.aws_ami.amazon_linux.id
 
   instance_type = each.value.instance_type
+  subnet_id = local.subnet_ids[each.value.name]
+  security_groups = [ aws_security_group.allow_tls ]
+
 
   tags = merge(var.tags,
 
