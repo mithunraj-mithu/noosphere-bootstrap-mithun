@@ -1,7 +1,3 @@
-data "aws_availability_zones" "available" {
-  state = "available"
-}
-
 
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
@@ -48,7 +44,7 @@ resource "aws_subnet" "public_subnet" {
   tags = merge(var.tags,
 
     {
-      Name = "${var.project}-${var.environment}-${data.aws_availability_zones.available.names[count.index]}"
+      Name = "${var.project}-${var.environment}-${var.availability_zones[count.index]}"
       Type = "Public"
 
     }

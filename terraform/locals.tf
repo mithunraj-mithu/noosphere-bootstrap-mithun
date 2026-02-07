@@ -1,8 +1,7 @@
-# locals.tf
 locals {
-  instance_sizes = {
-    dev        = { web = "t2.micro", app = "t2.micro", db = "t2.small" }
-    production = { web = "t3.large", app = "t3.large", db = "t3.xlarge" }
-    staging    = { web = "t3.large", app = "t3.large", db = "t3.xlarge" }
+  subnet_ids = {
+    db  = aws_subnet.public_subnet[0].id
+    web = aws_subnet.public_subnet[1].id
+    app = aws_subnet.public_subnet[2].id
   }
 }
