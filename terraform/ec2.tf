@@ -20,7 +20,7 @@ resource "aws_instance" "server" {
   tags = merge(var.tags,
 
     {
-      Name = "${each.key.value.name}-${var.environment}"
+      Name = "${each.key}-${var.environment}"
 
     }
   )
