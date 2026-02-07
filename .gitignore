@@ -5,5 +5,10 @@
 node_modules/
 .terraform/
 .terraform*
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.tfvars
+
 
 .DS_STORE
