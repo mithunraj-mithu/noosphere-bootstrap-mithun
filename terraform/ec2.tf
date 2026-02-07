@@ -18,7 +18,7 @@ resource "aws_instance" "server" {
 
   instance_type = each.value.instance_type
   subnet_id = local.subnet_ids[each.value.name]
-  security_groups = [ aws_security_group.allow_tls ]
+  vpc_security_group_ids = [aws_security_group.allow_tls.id]
 
 
   tags = merge(var.tags,
