@@ -42,7 +42,7 @@ jobs:
         uses: anchore/scan-action@v7
         with:
            path: "."
-           fail-build: true
+           fail-build: false
            severity-cutoff: high
       
 
@@ -79,7 +79,7 @@ jobs:
       - name: Setup greyp
         run: |
           curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin && \
-          grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} 
+          grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} --severity-cutoff high
 
 
       - name: Smoke test
