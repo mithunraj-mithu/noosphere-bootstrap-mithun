@@ -74,12 +74,13 @@ jobs:
       
       - name: Build Docker image (local)
         run: |
-          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }}  .
+          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}  .
       
       - name: Setup greyp
         run: |
           curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin && \
           grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} 
+
 
         
           
