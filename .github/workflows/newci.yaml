@@ -11,7 +11,8 @@ jobs:
   test:
     name: Unit Testing
     runs-on: ubuntu-latest
-    run:
+    defaults:
+      run:
       working-directory: app
     steps:
       - name: Checkout code
