@@ -49,7 +49,7 @@ jobs:
   nodejs-build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [test , grype-scan]
+    needs: [test-code , grype-scan]
     defaults:
       run:
        working-directory: app
