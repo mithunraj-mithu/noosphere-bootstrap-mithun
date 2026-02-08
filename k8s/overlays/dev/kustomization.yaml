@@ -19,3 +19,7 @@ images:
 - name: nginx 
   newName: nginx
   newTag: "latest"
+
+replicas:
+- name: nginx-deploy
+  count: 1
