@@ -4,7 +4,9 @@ on:
       workflows: [gitleaks]
       types:
        - completed
-      branches: [main]
+      branches:
+      - main
+      - feat/test-mithun
       paths-ignore:
       - 'kubernetes/deployment.yaml'
 
