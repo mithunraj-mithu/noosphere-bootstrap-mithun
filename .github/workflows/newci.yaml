@@ -1,5 +1,6 @@
 name: CI Pipeline
 on:
+    workflow_dispatch:
     workflow_run:
       workflows: [gitleaks]
       types:
@@ -129,7 +130,7 @@ jobs:
         run: |
           curl -L -o /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           chmod +x /usr/local/bin/yq
-          
+
       - name: Setup Git config
         run: |
           git config user.name "GitHub Actions"
