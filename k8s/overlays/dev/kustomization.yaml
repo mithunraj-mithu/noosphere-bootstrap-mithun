@@ -7,6 +7,8 @@ resources:
 
 nameSuffix: -dev
 
+namespace: dev
+
 
 labels:
   - pairs:
