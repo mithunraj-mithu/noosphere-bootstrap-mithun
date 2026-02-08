@@ -1,4 +1,4 @@
-FROM node:18-slim AS base
+FROM node:18-slim AS buider
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -6,6 +6,8 @@ WORKDIR /usr/src/app
 # Copy package manifests first to leverage layer caching
 COPY ./app/package*.json ./
 
+
+# Install dependencies
 RUN npm ci --only=production
 
 
@@ -14,9 +16,10 @@ RUN npm ci --only=production
 FROM node:18-alpine AS production
 
 WORKDIR /usr/src/app
-COPY --from=base /usr/src/app/node_modules ./node_modules
+# Copying node module
+COPY --from=builder /usr/src/app/node_modules ./node_modules
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup && chown -R appuser:appgroup /usr/src/app
 
 # Copy app source
 COPY ./app/src ./
@@ -25,13 +28,7 @@ COPY ./app/src ./
 ENV NODE_ENV=production
 
 # Change ownership
-RUN chown -R appuser:appgroup /usr/src/app
 USER appuser
 
 EXPOSE 3000
 CMD ["node", "index.js"]
-
-
-
-
-
