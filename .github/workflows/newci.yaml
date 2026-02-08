@@ -8,7 +8,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  test:
+  test-code:
     name: Unit Testing
     runs-on: ubuntu-latest
     defaults:
@@ -17,11 +17,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: testing-pwd-and-ls
+        run: pwd; ls;
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
           cache: 'npm'
       
       - name: Install dependencies
@@ -30,7 +32,7 @@ jobs:
       - name: Run tests
         run: npm test || echo "No tests found, would add tests in a real project"
 
-  lint:
+  lint-code:
     name: Static Code Analysis
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +42,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
           cache: 'npm'
       
       - name: Install dependencies
@@ -48,7 +50,7 @@ jobs:
       
       - name: Run ESLint
         run: npm run lint
-  grype scan:
+  grype-scan:
     name: SAST - Scan Dependencies with Grype
     runs-on: ubuntu-latest
     steps:
