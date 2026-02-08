@@ -74,7 +74,7 @@ jobs:
       
       - name: Build Docker image (local)
         run: |
-          docker build -f -t ${{ env.IMAGE_NAME }}:${{ github.sha }} 
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} 
       
       - name: grype scan 
         uses: anchore/scan-action@v7
