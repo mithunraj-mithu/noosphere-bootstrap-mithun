@@ -1,11 +1,11 @@
 name: CI Pipeline
 on:
     workflow_run:
-    workflows: [gitleaks]
-    types:
-      - completed
-    branches: [main]
-    paths-ignore:
+      workflows: [gitleaks]
+      types:
+       - completed
+      branches: [main]
+      paths-ignore:
       - 'kubernetes/deployment.yaml'
 
 env:
