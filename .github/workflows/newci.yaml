@@ -142,7 +142,7 @@ jobs:
           IMAGE_NAME: ${{ github.repository }}
           REGISTRY: ghcr.io
         run: |
-          yq -i '
+          yq -i ' 
           (.images[] | select(.name == "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun")).newTag = strenv(IMAGE_TAG)
           ' k8s/overlays/dev/kustomization.yaml
 
