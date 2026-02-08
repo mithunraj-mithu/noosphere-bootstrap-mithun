@@ -8,7 +8,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  test:
+  test-code:
     name: Unit Testing
     runs-on: ubuntu-latest
     defaults:
@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: npm test || echo "No tests found, would add tests in a real project"
 
-  lint:
+  lint-code:
     name: Static Code Analysis
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
       
       - name: Run ESLint
         run: npm run lint
-  grype scan:
+  grype-scan:
     name: SAST - Scan Dependencies with Grype
     runs-on: ubuntu-latest
     steps:
