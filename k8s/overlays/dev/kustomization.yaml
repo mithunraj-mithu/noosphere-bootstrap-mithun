@@ -16,8 +16,8 @@ labels:
     includeSelectors: true
 
 images:
-- name: nginx 
-  newName: nginx
+- name: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun 
+  newName: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
   newTag: "latest"
 
 replicas:
