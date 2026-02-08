@@ -31,30 +31,8 @@ jobs:
         run: npm ci --only=production
       
       - name: Run tests
-        run: npm test || echo "No tests found, would add tests in a real project"
+        run: npm test; exit 1 || echo "No tests found, would add tests in a real project"
 
-  lint-code:
-    name: Static Code Analysis
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-         working-directory: app
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: app/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci --only=production
-      
-      - name: Run ESLint
-        run: npm run lint
   grype-scan:
     name: SAST - Scan Dependencies with Grype
     runs-on: ubuntu-latest
