@@ -163,7 +163,7 @@ jobs:
       
       - name: Commit and push changes
         run: |
-          git add kubernetes/deployment.yaml
+          git add k8s/overlays/dev/kustomization.yaml
           git commit -m "Update Kubernetes deployment with new image tag: ${{ needs.build-scan-and-push.outputs.image_tag }} [skip ci]" || echo "No changes to commit"
           git push
 
