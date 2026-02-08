@@ -153,7 +153,7 @@ jobs:
 
           # Verify the change
           echo "Updated deployment to use image: ${NEW_IMAGE}"
-          grep -A 1 "image:" kubernetes/deployment.yaml
+          grep -A 1 "image:" k8s/overlays/dev/kustomization.yaml
       
       - name: Commit and push changes
         run: |
