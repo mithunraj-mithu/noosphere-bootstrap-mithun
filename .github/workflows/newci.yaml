@@ -5,10 +5,12 @@ on:
       branches: [main,feat/test-mithun]
       paths-ignore:
       - 'kubernetes/deployment.yaml'
+      - 'terraform/'
     pull_request:
       branches: [main,feat/test-mithun]
       paths-ignore:
       - 'kubernetes/deployment.yaml'
+      - 'terraform/'
       
 
 env:
@@ -16,7 +18,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
- Git-leak-scan:
+  Git-leak-scan:
     name: gitleaks
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +28,7 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-Test-code: # Adding a unit test for example purposes 
+  Test-code: # Adding a unit test for example purposes #
     name: Unit Testing
     needs: [Git-leak-scan]
     runs-on: ubuntu-latest
@@ -36,8 +38,6 @@ Test-code: # Adding a unit test for example purposes
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: testing-pwd-and-ls
-        run: pwd; ls;
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
