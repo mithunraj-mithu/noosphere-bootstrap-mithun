@@ -79,7 +79,7 @@ jobs:
       - name: grype scan 
         uses: anchore/scan-action@v7
         with:
-          image: ${{ env.IMAGE_NAME }}:${{ github.sha }} 
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$:{{ github.sha }} 
           fail-build: false
           severity-cutoff: high
           
