@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+resources:
+  - ../../base
+
+nameSuffix: -dev
+
+namespace: dev
+
+
+labels:
+  - pairs:
+      env: dev
+    includeSelectors: true
+
+images:
+- name: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun 
+  newName: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
+  newTag: "latest"
+
+replicas:
+- name: nginx-deploy
+  count: 1
