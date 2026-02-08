@@ -28,8 +28,9 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  test-code:
+  Test-code:
     name: Unit Testing
+    needs: [Git-leak-scan]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -53,8 +54,9 @@ jobs:
       - name: Run tests
         run: npm test || echo "No tests found, would add tests in a real project"
 
-  grype-scan:
+  Grype-scan:
     name: SAST - Scan Dependencies with Grype
+    needs: [Git-leak-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Scan current project
