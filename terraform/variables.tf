@@ -35,7 +35,23 @@ variable "instances" {
     name          = string
   }))
   default = {}
+
 }
+
+
+#Common tags for resources
+
+variable "tags" {
+
+  default = {
+    Environment = "Dev"
+    Squad       = "DevOps"
+    Created_by  = "terraform"
+
+  }
+
+}
+
 
 
 
