@@ -75,7 +75,7 @@ jobs:
          id: release
          run: npx semantic-release --dry-run --cwd ./app
     env:
-      ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          
         
 
