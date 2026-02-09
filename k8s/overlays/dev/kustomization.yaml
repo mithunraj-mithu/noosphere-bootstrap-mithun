@@ -5,7 +5,7 @@ resources:
 images:
   - name: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
     newName: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
-    newTag: "47f9f661036245a8aaa697c4a50f0402dc66111d"
+    newTag: "fac4b0ac9144d4ecd1ac807c7885e0f98b8a5bf2"
 replicas:
   - name: apí-deployment
     count: 1
