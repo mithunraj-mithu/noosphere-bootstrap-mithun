@@ -1,4 +1,4 @@
 locals {
 
-    az_names = data.aws_availability_zones.available
+  az_names = data.aws_availability_zones.available
 }

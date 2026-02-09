@@ -14,7 +14,7 @@ terraform {
 
 # AWS provider configured to be compatible with LocalStack by default.
 provider "aws" {
-  region                      = var.region
+  region = var.region
 
 }
 /*
