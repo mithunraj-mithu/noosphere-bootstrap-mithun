@@ -9,7 +9,8 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: devops-tech-test-app
+      app: devops-tech-test-api-v1
+      
   template:
     metadata:
       labels:
@@ -20,7 +21,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: api
-          image:
+          image: "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun:94d6266"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
@@ -49,4 +50,5 @@ spec:
               memory: "256Mi"
           env:
             - name: NODE_ENV
-              value:
+              value: production
+              

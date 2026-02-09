@@ -9,3 +9,5 @@ images:
 replicas:
   - name: apí-deployment
     count: 1
+
+    
