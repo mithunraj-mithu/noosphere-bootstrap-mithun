@@ -3,9 +3,8 @@ name: Release
 on:
   workflow_dispatch:
 
-jobs:
+  jobs:
   Semantic-release:
-
   name: Semantic Release
   runs-on: ubuntu-latest
   if: github.ref == 'refs/heads/main'
