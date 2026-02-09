@@ -1,3 +1,6 @@
+
+
+#creating vpc
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -25,7 +28,7 @@ resource "aws_internet_gateway" "igw1" {
 }
 
 
-
+# creating public subnets
 resource "aws_subnet" "public_subnet" {
   for_each = { for index, name in local.az_names.names : index => name }
   vpc_id                  = aws_vpc.main.id
@@ -37,14 +40,13 @@ resource "aws_subnet" "public_subnet" {
 
     {
       Name = "${var.project}-${var.environment}-${each.value}"
+      Type = "${var.project}-${var.environment}-Public"
 
     }
   )
 
 
 }
-
-
 
 # creating public_subnet route tabale
 resource "aws_route_table" "public_rt" {
@@ -57,9 +59,17 @@ resource "aws_route_table" "public_rt" {
   tags = merge(var.tags,
 
     {
-      Name = "${aws_subnet.public_subnet[0].tags["Name"]}-rt"
+      Name = "${var.project}-${var.environment}-Public"
 
     }
   )
 
+}
+
+# associating public subnets with public rt
+resource "aws_route_table_association" "public_rta" {
+  for_each = aws_subnet.public_subnet
+
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public_rt.id
 }
