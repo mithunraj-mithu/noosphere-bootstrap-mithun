@@ -1,0 +1,106 @@
+name: Terraform Plan & Manual Apply
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Apply Terraform changes?"
+        required: true
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  Git-leak-scan:
+    name: Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    env:
+      TF_IN_AUTOMATION: true
+
+    steps:
+
+    
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::273354664270:role/actions-role
+          aws-region: us-east-1
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform init
+        id: init
+        run: terraform init -input=false
+
+      - name: Terraform validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+
+      - name: Comment plan on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              #### Terraform fmt 🖌 \`${{ steps.fmt.outcome }}\`
+              #### Terraform init ⚙️ \`${{ steps.init.outcome }}\`
+              #### Terraform validate 🤖 \`${{ steps.validate.outcome }}\`
+              #### Terraform plan 📖 \`${{ steps.plan.outcome }}\`
+
+              <details><summary>Show plan</summary>
+
+              \`\`\`
+              ${process.env.PLAN}
+              \`\`\`
+
+              </details>
+              `
+            })
+
+      - name: Confirm apply
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "Apply = ${{ inputs.apply }}"
+
+      - name: Terraform apply
+        if: |
+          github.event_name == 'workflow_dispatch' &&
+          inputs.apply == 'true' &&
+          github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
