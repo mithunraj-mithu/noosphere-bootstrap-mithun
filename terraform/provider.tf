@@ -15,6 +15,8 @@ terraform {
 # AWS provider configured to be compatible with LocalStack by default.
 provider "aws" {
   region                      = var.region
+
+  /*
   access_key                  = var.aws_access_key
   secret_key                  = var.aws_secret_key
   skip_credentials_validation = true
@@ -30,4 +32,6 @@ provider "aws" {
     elbv2 = var.localstack_endpoint
     logs  = var.localstack_endpoint
   }
+
+  /*
 }
