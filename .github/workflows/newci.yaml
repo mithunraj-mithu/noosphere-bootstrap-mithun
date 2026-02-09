@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  Test-code: # for example purpose
+  Test-code: # for example purpose.
     name: Unit Testing
     needs: [Git-leak-scan]
     runs-on: ubuntu-latest
