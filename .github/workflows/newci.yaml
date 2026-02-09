@@ -73,7 +73,7 @@ jobs:
           node-version: '18'
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
-      - run: npm ci --only=production
+      - run: npm ci
       - name: Run semantic-release
         id: release
         env:
