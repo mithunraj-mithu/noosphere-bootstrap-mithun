@@ -130,7 +130,7 @@ jobs:
           git config user.email "actions@github.com"
       - name: Update K8s deployment with new image tag
         env:
-          IMAGE_TAG: ${{ build-scan-and-push.outputs.IMAGE_TAG }}
+          IMAGE_TAG: ${{ needs.build-scan-and-push.outputs.IMAGE_TAG }}
           IMAGE_NAME: ${{ github.repository }}
           REGISTRY: ghcr.io
         run: |
