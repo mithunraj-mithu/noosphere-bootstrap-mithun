@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  Test-code: # for example purpose
+  Test-code: # for example purpose.
     name: Unit Testing
     needs: [Git-leak-scan]
     runs-on: ubuntu-latest
@@ -59,6 +59,9 @@ jobs:
   Semantic-release:
     name: Semantic Release
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
     needs: [Test-code, Grype-scan]
     if: github.ref == 'refs/heads/main'
     steps:
