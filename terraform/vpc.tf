@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "igw1" {
     tags = merge(var.tags,
 
     {
-      Name = "${var.project}-${var.environment}-${each.value}"
+      Name = "${var.project}-${var.environment}-igw"
       Type = "${var.project}-${var.environment}-Public"
 
     }
