@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: deployment
+kind: Deployment
 metadata:
   name: api-deployment
   namespace: devops-tech-test
@@ -20,13 +20,14 @@ spec:
         runAsUser: 1000
         fsGroup: 1000
       containers:
-        - name: api
-          image: "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun:94d6266"
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 3000
-              name: http
-          readinessProbe:
+      - name: api
+        image: "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun:94d6266"
+        ports:
+          - containerPort: 3000
+            protocol: TCP
+          
+        imagePullPolicy: IfNotPresent
+        readinessProbe:
             httpGet:
               path: /health
               port: http
@@ -34,21 +35,21 @@ spec:
             periodSeconds: 5
             failureThreshold: 3
             successThreshold: 1
-          livenessProbe:
+        livenessProbe:
             httpGet:
               path: /health
               port: http
             initialDelaySeconds: 15
             periodSeconds: 10
             failureThreshold: 3
-          resources:
+        resources:
             requests:
               cpu: "100m"
               memory: "128Mi"
             limits:
               cpu: "250m"
               memory: "256Mi"
-          env:
+        env:
             - name: NODE_ENV
               value: production
               
