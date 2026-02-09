@@ -9,10 +9,14 @@ resource "aws_s3_bucket" "artifacts" {
       days = 7
     }
   }
+    tags = merge(var.tags,
 
-  tags = {
-    Name = "${var.project}-${var.environment}-artifacts"
-  }
+    {
+     Name = "${var.project}-${var.environment}-artifacts"
+      
+
+    }
+  )
 }
 
 # LocalStack compatibility: ensure force path style is enabled in provider

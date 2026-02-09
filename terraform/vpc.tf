@@ -16,11 +16,11 @@ resource "aws_vpc" "main" {
 resource "aws_internet_gateway" "igw1" {
   vpc_id = aws_vpc.main.id
 
-  tags = merge(var.tags,
+    tags = merge(var.tags,
 
     {
-
-      Name = "${var.project}-${var.environment}-igw"
+      Name = "${var.project}-${var.environment}-${each.value}"
+      Type = "${var.project}-${var.environment}-Public"
 
     }
   )
@@ -59,7 +59,8 @@ resource "aws_route_table" "public_rt" {
   tags = merge(var.tags,
 
     {
-      Name = "${var.project}-${var.environment}-Public"
+      Name = "${var.project}-${var.environment}-${each.value}"
+      Type = "${var.project}-${var.environment}-Public"
 
     }
   )
