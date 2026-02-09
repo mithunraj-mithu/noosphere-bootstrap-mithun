@@ -38,6 +38,13 @@ variable "db_username" {
   type    = string
   default = "appuser"
 }
+ variable "vpc_cidr" {
+      type = string
+      default = "10.0.0.0/16"
+   
+ }
+
+
 
 variable "instances" {
   description = "Map of EC2 instance configurations"

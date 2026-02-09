@@ -7,7 +7,13 @@ resource "aws_vpc" "main" {
   }
 }
 
-# resource "aws_subnet" "public" {
+resource "aws_subnet" "public_subnet" {
 
-# }
-
+   for_each = { for index, az_name in local.local.az_names : index => az_name }
+   vpc_id = aws_vpc.main.id
+   cidr_block = cidrsubnet(var.vpc_cidr,8,each.key + 1)
+   availability_zone = local.az_names[each.key]
+   map_public_ip_on_launch = true
+   
+  
+}
