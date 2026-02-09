@@ -59,7 +59,7 @@ resource "aws_route_table" "public_rt" {
   tags = merge(var.tags,
 
     {
-      Name = "${var.project}-${var.environment}-${each.value}"
+      Name = "${var.project}-${var.environment}-public-rt"
       Type = "${var.project}-${var.environment}-Public"
 
     }
