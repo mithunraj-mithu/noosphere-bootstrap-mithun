@@ -1,5 +1,3 @@
-name: Terraform Plan & Manual Apply
-
 on:
   pull_request:
     branches: [main]
@@ -41,14 +39,18 @@ jobs:
     env:
       TF_IN_AUTOMATION: true
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
+      - uses: actions/checkout@v4
+
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::273354664270:role/actions-role
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
-
-      - uses: actions/checkout@v4
 
       - uses: hashicorp/setup-terraform@v3
 
@@ -87,13 +89,10 @@ jobs:
               #### Terraform init ⚙️ \`${{ steps.init.outcome }}\`
               #### Terraform validate 🤖 \`${{ steps.validate.outcome }}\`
               #### Terraform plan 📖 \`${{ steps.plan.outcome }}\`
-
               <details><summary>Show plan</summary>
-
               \`\`\`
               ${process.env.PLAN}
               \`\`\`
-
               </details>
               `
             })
