@@ -73,7 +73,7 @@ jobs:
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: npx semantic-release --pkg-root app
 
   build-scan-and-push:
     name: Build, Scan, and Push Docker Image
