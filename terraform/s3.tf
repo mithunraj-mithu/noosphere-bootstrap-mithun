@@ -1,11 +1,11 @@
 
 resource "aws_s3_bucket" "artifacts_bucket" {
-  bucket = "${var.project}-${var.environment}-artifacts"
+  bucket = "${var.project}-${var.environment}-artifacts-store"
 
   tags = merge(var.tags,
 
     {
-     Name = "${var.project}-${var.environment}-artifacts"
+     Name = "${var.project}-${var.environment}-artifacts-store"
       
 
     }
@@ -13,25 +13,19 @@ resource "aws_s3_bucket" "artifacts_bucket" {
 }
 
 
-resource "aws_s3_bucket" "artifacts" {
+resource "aws_s3_bucket_lifecycle_configuration" "artifacts" {
   bucket = aws_s3_bucket.artifacts_bucket.id
 
-  lifecycle_rule {
-    id      = "auto-delete"
-    enabled = true
+  rule {
+    id     = "auto-delete"
+    status = "Enabled"
 
     expiration {
       days = 7
     }
   }
-    tags = merge(var.tags,
 
-    {
-     Name = "${var.project}-${var.environment}-artifacts"
-      
-
-    }
-  )
 }
+
 
 # LocalStack compatibility: ensure force path style is enabled in provider
