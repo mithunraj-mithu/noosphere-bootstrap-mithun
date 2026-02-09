@@ -1,17 +1,12 @@
 name: CI Pipeline
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
+  on:
+    pull_request:
+     branches: [main]
     paths-ignore:
       - 'kubernetes/deployment.yaml'
       - 'terraform/'
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'kubernetes/deployment.yaml'
-      - 'terraform/'
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
