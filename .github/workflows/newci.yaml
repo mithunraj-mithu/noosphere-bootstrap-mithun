@@ -4,8 +4,8 @@ on:
   pull_request:
      branches: [main]
   paths-ignore:
-      - 'kubernetes/deployment.yaml'
-      - 'terraform/'
+  - 'kubernetes/deployment.yaml'
+  - 'terraform/'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -40,7 +40,7 @@ jobs:
       - run: npm ci --only=production
       - run: npm test || echo "No tests found, would add tests in a real project"
 
-  Grype-scan:
+  Grype-scan: #demo
     name: SAST - Scan Dependencies with Grype
     needs: [Git-leak-scan]
     runs-on: ubuntu-latest
