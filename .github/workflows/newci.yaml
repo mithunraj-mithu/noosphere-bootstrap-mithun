@@ -68,12 +68,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - run: npm ci
+      - run: npm ci --prefix ./app
       - name: Run semantic-release
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --pkg-root app
+        run: npx semantic-release --cwd ./app
 
   build-scan-and-push:
     name: Build, Scan, and Push Docker Image
