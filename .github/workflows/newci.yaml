@@ -111,7 +111,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ giub.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ gitub.sha }}
 
   update-k8s:
     name: Update Kubernetes Deployment
