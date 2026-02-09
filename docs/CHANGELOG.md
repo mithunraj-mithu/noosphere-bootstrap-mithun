@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun/compare/v1.0.0...v1.1.0) (2026-02-09)
+
+
+### Bug Fixes
+
+* New combined some commits into one ([acb5088](https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun/commit/acb5088178adac6bd0b9f28f973b116eca1256cb))
+
+
+### Features
+
+* added gitleaks job on terraform ci ([8de395c](https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun/commit/8de395c65f4fd09f8c2cc83c20488f7942e02653))
+* added Iac.yaml for terraform automation ([b52717d](https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun/commit/b52717d2d944f0796d0fedeb85462bd0e5edf4d9))
+* merging changes into main ([bec4385](https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun/commit/bec43851241e451e8b17e9e1ef909b93e52053fe))
+
 # 1.0.0 (2026-02-09)
 
 
