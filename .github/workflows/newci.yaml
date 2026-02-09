@@ -59,24 +59,26 @@ jobs:
   Semantic-release:
     name: Semantic Release
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     needs: [Test-code, Grype-scan]
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - run: npm ci
-      - name: Run semantic-release
-        id: release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+       - uses: actions/checkout@v4
+       - uses: actions/setup-node@v4
+         with:
+         node-version: '18'
+       - run: npm install --save-dev semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/npm
+       - name: Run semantic-release
+         id: release
+         run: npx semantic-release --dry-run --cwd ./app
+    env:
+      ${{ secrets.GITHUB_TOKEN }}
+         
+        
+
 
   build-scan-and-push:
     name: Build, Scan, and Push Docker Image
