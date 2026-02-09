@@ -137,5 +137,5 @@ jobs:
           yq -i '(.images[] | select(.name == "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun")).newTag = strenv(IMAGE_TAG)' k8s/overlays/dev/kustomization.yaml
       - run: |
           git add k8s/overlays/dev/kustomization.yaml
-          git commit -m "Update K8s deployment to image ${{ IMAGE_TAG }} [skip ci]" || echo "No changes to commit"
+          git commit -m "Update K8s deployment to image ${{ env.IMAGE_TAG }} [skip ci]" || echo "No changes to commit"
           git push
