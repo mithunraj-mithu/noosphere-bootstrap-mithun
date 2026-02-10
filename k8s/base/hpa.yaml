@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: web-app-hpa
+  name: devops-tech-test-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: devops-tech-test # Ensure this matches your deployment
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 3
   metrics:
   - type: Resource
