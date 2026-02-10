@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'kubernetes/deployment.yaml'
+      - 'k8s/'
       - 'terraform/'
 
 env:
@@ -118,11 +118,30 @@ jobs:
          run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
 
+       - name: Grype scan Docker image
+         run: |
+          curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin
+          grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} --fail-on high
+
+       - name: smoke test Docker image
+         run: |
+          docker run -d --name test-container -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          sleep 7
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health)
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "Smoke test failed with HTTP code $HTTP_CODE"
+            exit 1
+          else
+            echo "Smoke test passed with HTTP code $HTTP_CODE"
+          fi
+          
+           
+
   update-k8s:
     name: Update Kubernetes Deployment
     runs-on: ubuntu-latest
     needs: [build-scan-and-push]
-    if: github.ref == 'refs/heads/main'
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4
         with:
