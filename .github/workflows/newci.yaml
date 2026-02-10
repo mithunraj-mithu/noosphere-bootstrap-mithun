@@ -88,6 +88,26 @@ jobs:
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
 
+      - name: Grype scan Docker image
+        run: |
+          curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin
+          grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} --fail-on high
+
+      - name: smoke test Docker image
+        run: |
+          docker run -d --name test-container -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          sleep 7
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/health)
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "Smoke test failed with HTTP code $HTTP_CODE"
+            exit 1
+          else
+            echo "Smoke test passed with HTTP code $HTTP_CODE"
+          fi
+      - name: Push Docker image
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
   build-for-feature-branch:
        name: Build, Scan, and Push Docker Image for Feature Branches
        runs-on: ubuntu-latest
