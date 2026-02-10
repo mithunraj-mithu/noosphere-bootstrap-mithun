@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: devops-tech-test # Ensure this matches your deployment
   minReplicas: 2
-  maxReplicas: 3
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
