@@ -136,7 +136,7 @@ jobs:
           fi
 
        - name: Push Docker image
-          run: |
+         run: |
            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           
            
