@@ -5,4 +5,4 @@ resources:
 images:
   - name: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
     newName: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
-    newTag: "868dc908b671b098aae92711f1a345381fb62666"
+    newTag: "5a8a03f96e2fe8432e693d62597247d064933b59"
