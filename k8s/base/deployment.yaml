@@ -21,7 +21,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: api
-        image: "ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun:94d6266"
+        image: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun:84fb52871b85bd16115892d7028c2a6a93e544ce
         ports:
           - containerPort: 3000
             protocol: TCP
