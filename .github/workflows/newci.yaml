@@ -134,6 +134,10 @@ jobs:
           else
             echo "Smoke test passed with HTTP code $HTTP_CODE"
           fi
+
+       - name: Push Docker image
+          run: |
+           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           
            
 
