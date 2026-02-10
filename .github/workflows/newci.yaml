@@ -114,7 +114,7 @@ jobs:
 
       - name: Update K8s deployment with new image tag
         env:
-          IMAGE_TAG: ${{ needs.build-scan-and-push.outputs.IMAGE_TAG }}
+          IMAGE_TAG: ${{ github.sha }}
           IMAGE_NAME: ${{ github.repository }}
           REGISTRY: ghcr.io
         run: |
