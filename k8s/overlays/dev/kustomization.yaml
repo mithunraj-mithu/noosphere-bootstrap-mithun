@@ -6,8 +6,6 @@ images:
   - name: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
     newName: ghcr.io/mithunraj-mithu/noosphere-bootstrap-mithun
     newTag: "84fb52871b85bd16115892d7028c2a6a93e544ce"
-replicas:
-  - name: api-deployment
-    count: 1
+
 
     
