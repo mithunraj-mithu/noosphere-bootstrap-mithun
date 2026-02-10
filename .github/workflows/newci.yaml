@@ -56,11 +56,10 @@ jobs:
           fail-build: false
           severity-cutoff: high
 
-  build-scan-and-push:
-    name: Build, Scan, and Push Docker Image
+  Docker-build-and-push-feature-branch:
+    name: Docker build for feature branch
     runs-on: ubuntu-latest
     needs: [Grype-scan,Test-code]
-    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
@@ -88,11 +87,15 @@ jobs:
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
 
-  build-for-feature-branch:
-       name: Build, Scan, and Push Docker Image for Feature Branches
+      - name: Grype scan Docker image
+        run: |
+            curl -sSfL https://get.anchore.io/grype | sudo sh -s -- -b /usr/local/bin
+            grype ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} --fail-on high
+
+  Docker-build-and-push-main-branch:
+       name: Docker build for main
        runs-on: ubuntu-latest
        needs: [Grype-scan,Test-code]
-       if: github.ref == 'refs/heads/feat*'
        permissions:
         contents: read
         packages: write
@@ -144,8 +147,7 @@ jobs:
   update-k8s:
     name: Update Kubernetes Deployment
     runs-on: ubuntu-latest
-    needs: [build-scan-and-push]
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    needs: [Docker-build-and-push-main-branch]
     steps:
       - uses: actions/checkout@v4
         with:
