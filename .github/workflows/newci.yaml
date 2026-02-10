@@ -59,6 +59,7 @@ jobs:
   Docker-build-and-push-feature-branch:
     name: Docker build for feature branch
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
     needs: [Grype-scan,Test-code]
     permissions:
       contents: read
