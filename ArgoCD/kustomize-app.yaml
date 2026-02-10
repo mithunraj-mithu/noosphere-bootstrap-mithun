@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/mithunraj-mithu/noosphere-bootstrap-mithun
     targetRevision: HEAD
-    path: kustomize/overlays/dev
+    path: k8s/overlays/dev
   destination:
     server: https://kubernetes.default.svc
     namespace: devops-tech-test
