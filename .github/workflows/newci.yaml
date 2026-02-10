@@ -60,7 +60,6 @@ jobs:
     name: Build, Scan, and Push Docker Image
     runs-on: ubuntu-latest
     needs: [Grype-scan,Test-code]
-    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       packages: write
