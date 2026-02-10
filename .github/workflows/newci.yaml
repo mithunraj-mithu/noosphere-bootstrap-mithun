@@ -88,7 +88,7 @@ jobs:
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
 
-    build-for-feature-branch:
+  build-for-feature-branch:
        name: Build, Scan, and Push Docker Image for Feature Branches
        runs-on: ubuntu-latest
        needs: [Grype-scan,Test-code]
