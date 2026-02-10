@@ -166,4 +166,5 @@ jobs:
       - run: |
           git add k8s/overlays/dev/kustomization.yaml
           git commit -m "Update K8s deployment to image ${{ env.IMAGE_TAG }} [skip ci]" || echo "No changes to commit"
-          git push
+          git pull --rebase origin main
+          git push origin main
